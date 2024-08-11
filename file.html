@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Stopwatch</title>
+	<style>
+		#timer {
+			font-size: 24px;
+			font-weight: bold;
+		}
+		.button {
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<body>
+	<h1>Stopwatch</h1>
+	<div id="timer">00:00:00</div>
+	<button class="button" onclick="startTimer()">Start</button>
+	<button class="button" onclick="stopTimer()">Stop</button>
+	<button class="button" onclick="resetTimer()">Reset</button>
+	
+	<script>
+		let timer = document.getElementById('timer');
+		let seconds = 0;
+		let minutes = 0;
+		let hours = 0;
+		let interval = null;
+		
+		function startTimer() {
+			interval = setInterval(() => {
+				seconds++;
+				if (seconds >= 60) {
+					minutes++;
+					seconds = 0;
+				}
+				if (minutes >= 60) {
+					hours++;
+					minutes = 0;
+				}
+				updateTimer();
+			}, 1000);
+		}
+		
+		function stopTimer() {
+			clearInterval(interval);
+		}
+        function resetTimer() {
+			seconds = 0;
+			minutes = 0;
+			hours = 0;
+			updateTimer();
+		}
+		
+		function updateTimer() {
+			timer.innerHTML = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+		}
+		
+		function pad(number) {
+			return (number < 10 ? '0' : '') + number;
+		}
+	</script>
+</body>
+</html>
+
